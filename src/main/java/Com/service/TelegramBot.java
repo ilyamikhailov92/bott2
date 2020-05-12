@@ -55,7 +55,7 @@ public class TelegramBot extends TelegramLongPollingBot {
         SendMessage responseMsg = new SendMessage(chatId,receivedInfo);
         execute(responseMsg);
 
-       // log.info("Пользователь {} написал {} ", userName, message.getMessage().getText());
+       // log.info("Пользователь {} написал {} ", userName,  message.getMessage().getText());
 
         //Long chatUserId = message.getMessage().getChatId();
         //String responseText = "какой-то ответ";
