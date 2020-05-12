@@ -1,0 +1,16 @@
+server:
+  port: ${BOOT_PORT:${PICKUP_BOT_SERVICE_PORT:777}}
+
+spring:
+  application:
+    name: bot
+  profiles:
+    active: default
+
+bot:
+  telegramTokenName: IMRemindBot
+  telegramTokenValue: 1058251631:AAEk-5t2lUb3yujZIgHJCwQG50LeNVlwjHg
+  telegramProxyHost: 194.182.82.74
+  telegramProxyPort: 3128
+  telegramProxyLogin: pubot
+  telegramProxyPassword: Dee1ierah+ei
