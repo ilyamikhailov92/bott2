@@ -49,11 +49,13 @@ public class Scheduler {
         }
         else
         {
+            messageWithBD.append("Сегодня ДР у:");
             for(String y: filteredData)
             {
-                messageWithBD.append("Сегодня ДР у:" + '\n' + y);
+                messageWithBD.append('\n' + y);
             }
         }
+
 
         SendMessage dateMsg = new SendMessage("155965744", String.valueOf(messageWithBD));
         message.execute(dateMsg);

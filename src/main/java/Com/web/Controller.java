@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.ParseException;
 
 @RestController
 @RequestMapping("api/v1")
@@ -30,8 +31,8 @@ public class Controller {
     }
 
     @PostMapping("saveToDb/{content}")
-    public String save(@PathVariable String content) throws IOException, SQLException {
-        return postgreOps.update(content);
+    public String save(@PathVariable String event_datetime, @PathVariable String note) throws IOException, SQLException, ParseException {
+        return postgreOps.update(event_datetime, note);
     }
 
     /*

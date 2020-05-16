@@ -12,6 +12,8 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 
 import javax.annotation.PostConstruct;
 
+import static java.time.LocalDateTime.now;
+
 
 @Service
 @Slf4j
@@ -32,6 +34,23 @@ public class TelegramBot extends TelegramLongPollingBot {
         Long info = message.getMessage().getChatId();
         String chatId = info.toString();
         String messageText = message.getMessage().getText();
+
+        String[] parsedMessage = null;
+
+
+        if (messageText.contains("/addEvent"))
+        {
+            //Распарсить
+            parsedMessage = messageText.split(" ");
+            System.out.println(parsedMessage[1]);
+            //Отправить в postgtreOps
+            postgreOps.update(parsedMessage[1], parsedMessage[3]);
+            //Отправить в бот сообщение об успешной записи
+            SendMessage responseMsg = new SendMessage(chatId, "Событие добавлено успешно");
+            execute(responseMsg);
+        }
+
+        /*
 
         //Проверка полученного сообшения на соответствие регулярному выражению
         boolean match = messageText.matches("[a-zA-Zа-яА-Я]*\\s[a-zA-Zа-яА-Я]*\\s[a-zA-Zа-яА-Я]*\\s[0-9]*[\\.|-][0-9]*[\\.|-][0-9]*");
@@ -54,6 +73,7 @@ public class TelegramBot extends TelegramLongPollingBot {
 
         SendMessage responseMsg = new SendMessage(chatId,receivedInfo);
         execute(responseMsg);
+        */
 
        // log.info("Пользователь {} написал {} ", userName,  message.getMessage().getText());
 
@@ -62,6 +82,9 @@ public class TelegramBot extends TelegramLongPollingBot {
 
         //SendMessage responseMsg = new SendMessage(chatUserId, responseText);
     }
+
+
+
 
     public String getBotUsername() {
         return config.getTelegramTokenName();
