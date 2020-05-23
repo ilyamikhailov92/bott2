@@ -12,6 +12,9 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 
 import javax.annotation.PostConstruct;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static java.time.LocalDateTime.now;
 
 
@@ -37,16 +40,41 @@ public class TelegramBot extends TelegramLongPollingBot {
 
         String[] parsedMessage = null;
 
+        String note, trimmedNote = null;
 
-        if (messageText.contains("/addEvent"))
+
+        if (messageText.contains("Добавить"))
+        {
+            SendMessage responseMsg = new SendMessage(chatId, "Какого типа событие добавить: ДР | Напоминание? \nФормат ДР: ДР <дд.мм.гггг> <Чей ДР>\nФормат напоминания: Напоминание <Когда напомнить> <Описание>");
+            execute(responseMsg);
+        }
+        Boolean check = null;
+        if (messageText.contains("ДР"))
         {
             //Распарсить
             parsedMessage = messageText.split(" ");
-            System.out.println(parsedMessage[1]);
+            List <String> date = new ArrayList<>();
+            List <String> notes = new ArrayList<>();
+            for (String i : parsedMessage)
+            {
+                if(i.matches("[0-9]+\\.[0-9]+\\.[0-9]+"))
+                {date.add(i);}
+                //проверка, чтобы слово ДР не было добавлено в список слов описания события
+                check=i.equals("ДР");
+                if((i.matches("[а-яА-Я]*")) && check==false)
+                {notes.add(i);}
+            }
+            //преобразование списка слов события в строку
+            note = notes.toString();
+            trimmedNote = note.substring(1, note.length()-1);
+
             //Отправить в postgtreOps
-            postgreOps.update(parsedMessage[1], parsedMessage[3]);
+            if(date.get(0) != null) {
+                String res = postgreOps.update(date.get(0), trimmedNote, chatId);
+            }
+
             //Отправить в бот сообщение об успешной записи
-            SendMessage responseMsg = new SendMessage(chatId, "Событие добавлено успешно");
+            SendMessage responseMsg = new SendMessage(chatId, "Запись добавлена успешно");
             execute(responseMsg);
         }
 

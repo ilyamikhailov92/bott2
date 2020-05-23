@@ -31,8 +31,8 @@ public class Controller {
     }
 
     @PostMapping("saveToDb/{content}")
-    public String save(@PathVariable String event_datetime, @PathVariable String note) throws IOException, SQLException, ParseException {
-        return postgreOps.update(event_datetime, note);
+    public String save(@PathVariable String event_datetime, @PathVariable String note, @PathVariable String chatId) throws IOException, SQLException, ParseException {
+        return postgreOps.update(event_datetime, note, chatId);
     }
 
     /*

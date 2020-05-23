@@ -2,34 +2,66 @@ package Com.service;
 
 import Com.Model.EventDto;
 import Com.Model.UserDto;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.telegram.telegrambots.api.methods.send.SendMessage;
+
 
 import java.sql.*;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.Date;
-import java.util.List;
 
 public class postgreOps {
 
-    public static String update(String event_datetime, String note) throws SQLException, ParseException {
+
+    public static String update(String event_datetime, String note, String chatId) throws SQLException, ParseException {
+        String outputText = null;
+        Date date = null;
+
+
+        //List<String> filteredData = new ArrayList<>();
+
         Connection connection = DriverManager
                 .getConnection("jdbc:postgresql://localhost:5432/bott2?currentSchema=public", "postgres", "qDZ23UG1234");
-        Statement stmt = connection.createStatement(ResultSet.TYPE_FORWARD_ONLY,
+        Statement stmt = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
                 ResultSet.CONCUR_UPDATABLE);
 
         ResultSet resultSet = stmt.executeQuery("SELECT * FROM events");
 
-        //Date dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss:SSS").parse(event_datetime);
-        //Long parsedDate = Long.parseLong(event_datetime);
-        //Timestamp dateTimeStamp=new Timestamp(parsedDate);
+        DateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
+        DateFormat inputFormat = new SimpleDateFormat("dd.MM.yyyy");
+        date = inputFormat.parse(event_datetime);
+        outputText = outputFormat.format(date);
 
+        /*
+        //Проверка для нескольких форматов
+        List<SimpleDateFormat> inputFormats = new ArrayList<SimpleDateFormat>();
+        inputFormats.add(new SimpleDateFormat("dd.MM.yyyy"));
+        inputFormats.add(new SimpleDateFormat("dd.MM"));
+        inputFormats.add(new SimpleDateFormat("yyyy-MM-dd"));
+        */
+
+        //Получение количества строк
+        int size = 0;
+        int incrementedSize = 0;
+        if (resultSet != null)
+        {
+            resultSet.last();
+            size = resultSet.getRow();
+        }
+
+        //Получение
+        incrementedSize=size+1;
+
+        //
         resultSet.moveToInsertRow();
-        resultSet.updateInt(1,5);
-        resultSet.updateString(2, "155965744");
-        resultSet.updateTimestamp(3, Timestamp.valueOf("2012-05-11 20:53:59.000000"));  //event_datetime
-        resultSet.updateString(4, event_datetime);
+        resultSet.updateInt(1,incrementedSize);
+        resultSet.updateString(2, chatId);
+        resultSet.updateTimestamp(3, Timestamp.valueOf(outputText));//Timestamp.valueOf(event_datetime));  //Целевой формат: 2012-05-11 20:53:59.000000
+        resultSet.updateString(4, "event_datetime");
         resultSet.updateString(5, note);
         resultSet.insertRow();
 

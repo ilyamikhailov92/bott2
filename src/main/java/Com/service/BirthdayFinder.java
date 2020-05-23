@@ -13,8 +13,6 @@ public class BirthdayFinder {
     public static String checkDate(String inputStream) throws TelegramApiException {
 
         String res = null;
-        Boolean hasEventCheckResult;
-
         LocalDate date = LocalDate.now();
         String convertedDate = date.toString();
         String cutConvertedDate = convertedDate.substring(5, 10);
@@ -27,10 +25,8 @@ public class BirthdayFinder {
         */
 
         if (inputStream.contains(cutConvertedDate)) {
-            //hasEventCheckResult = true;
             res = "Birthday!";
         } else {
-            //hasEventCheckResult = false;
             res = "No birthday!";
         }
         return res;
