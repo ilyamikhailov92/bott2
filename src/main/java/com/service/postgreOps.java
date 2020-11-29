@@ -1,16 +1,13 @@
-package Com.service;
+package com.service;
 
-import Com.Model.EventDto;
-import Com.Model.UserDto;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.telegram.telegrambots.api.methods.send.SendMessage;
+import com.model.EventDto;
+import com.model.UserDto;
 
 
 import java.sql.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.Date;
 

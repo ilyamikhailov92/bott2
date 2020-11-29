@@ -1,11 +1,10 @@
-package Com.service;
+package com.service;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import Com.Model.EventDto;
-import Com.Model.UserDto;
-import com.google.inject.internal.cglib.core.$LocalVariablesSorter;
+import com.model.EventDto;
+import com.model.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -16,8 +15,9 @@ import org.telegram.telegrambots.exceptions.TelegramApiException;
 @EnableScheduling
 @Service
 public class Scheduler {
+
     @Autowired TelegramBot message;
-    @Scheduled (fixedRate = 50000)
+    //@Scheduled (fixedRate = 50000)
     public void checkDate() throws TelegramApiException, SQLException, ClassNotFoundException
     {
 

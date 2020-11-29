@@ -1,4 +1,4 @@
-package Com.config;
+package com.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -10,12 +10,6 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = "bot")
 @Data
 public class BotYmlConfig {
-
-    private String telegramTokenName;
-    private String telegramTokenValue;
-    private String telegramProxyHost;
-    private int telegramProxyPort;
-    private String telegramProxyLogin;
-    private String telegramProxyPassword;
-
+  private String telegramTokenName;
+  private String telegramTokenValue;
 }

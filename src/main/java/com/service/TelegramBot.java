@@ -1,9 +1,10 @@
-package Com.service;
+package com.service;
 
-import Com.config.BotYmlConfig;
+import com.config.BotYmlConfig;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Update;
@@ -20,14 +21,11 @@ import static java.time.LocalDateTime.now;
 
 @Service
 @Slf4j
+@ConditionalOnBean(value = {TelegramLongPollingBot.class})
 public class TelegramBot extends TelegramLongPollingBot {
 
     @Autowired
     private BotYmlConfig config;
-
-    public TelegramBot(DefaultBotOptions options) {
-        super(options);
-    }
 
     @Override
     @SneakyThrows

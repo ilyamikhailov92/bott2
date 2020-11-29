@@ -1,8 +1,8 @@
-package Com.web;
+package com.web;
 
-import Com.service.dbOps;
-import Com.service.Calculate;
-import Com.service.postgreOps;
+import com.service.dbOps;
+import com.service.Calculate;
+import com.service.postgreOps;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
